@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="/images/favicon.ico" />
+    <link rel="stylesheet" href="/css/home.css">
+    
+    <title>
+        Runway44
+    </title>
+</head>
+<body>
+    <div id="container">
+        <div id="formdiv">
+            <h2>Welcome to Runway 44 !!</h2>
+            <div id="LogButton"><button id="register" class="logbutton" onclick="window.location.href = 'http://localhost:8000/register';">REGISTER</button> <button id="login" class="logbutton" onclick="window.location.href = 'http://localhost:8000/login';">LOGIN</button> <button id="airline" class="logbutton" onclick="window.location.href = 'http://localhost:8000/airline';">AIRLINE</button></div>
+            <div id="field-section" data-usertype="<%= locals.usertype %>">
+                <% if(locals.usertype == 1){ %>
+                    <%- include('_register'); %>
+                <%} %>
+                <% if(locals.usertype == 2){ %>
+                    <%- include('_login'); %>
+                <%} %>
+                <% if(locals.usertype == 3){ %>
+                    <%- include('_airline'); %>
+                <% }%>
+            </div>
+        </div>
+        <div id="imagediv">
+        </div>
+    </div>
+    <script type="text/javascript" src="js/home.js">
+        //Once the script is linked to otherexternal file anything written inside this doesn't work.
+    </script>
+</body>
+</html>

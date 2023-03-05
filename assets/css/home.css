@@ -1,0 +1,157 @@
+body{
+    background: linear-gradient(to top right, rgb(83, 132, 191), rgb(45 82 128));
+}
+
+h2{
+    text-align: center; 
+    color: rgba(56, 57, 63, 0.768);
+}
+
+h3{
+    text-align: center; 
+    color: rgba(56, 57, 63, 0.527);
+    margin: 1px;
+    
+}
+
+#icon44{
+    background-image: url(../images/favicon.ico);
+    background-size: cover;
+}
+
+#container{
+    position: absolute;
+    display: flex;
+    flex-direction: row;
+    width: 75vw;
+    height: 75vh;
+    background-color: aquamarine;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border-collapse: separate;
+    border-radius: 20px;
+    overflow: hidden;
+    perspective: 1px;
+}
+
+#formdiv{
+    width: 50%;
+    height: 100%;
+    background-color: white;
+}
+
+#imagediv{
+    width: 50%;
+    height: 100%;
+    background-image: url(../images/leftwing.jpeg);
+    background-size: cover;
+}
+
+#LogButton{
+    display: flex;
+    height: 30px;
+    width: 95%;
+    justify-content: space-evenly;
+    background-color: lightgray;
+    border-radius: 25px;
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.logbutton{
+    width: 33%;
+    height: 80%;
+    padding:0;
+    margin:0;
+    border-radius: 20px;
+    border:1px;
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+    font-weight: bold;
+    background-color: inherit;
+    cursor: pointer;
+}
+
+#field-section{
+    padding: 10px;
+}
+
+/*SignUp form code*/
+form {
+    font-family: Arial, Helvetica, sans-serif;
+    color:rgb(51, 50, 50);
+    font-size: 0.8rem;
+}
+
+
+* {box-sizing: border-box}
+
+/* Full-width input fields */
+input[type=text], input[type=password] {
+  width: 100%;
+  padding: 5px 15px;
+  margin: 5px 0 10px 0;
+  display: inline-block;
+  border: none;
+  background: #f1f1f1;
+}
+
+input[type=text]:focus, input[type=password]:focus {
+  background-color: #ddd;
+  outline: none;
+}
+
+hr {
+  border: 1px solid #f1f1f1;
+  margin-bottom: 10px;
+}
+
+/* Set a style for all buttons */
+.signupbtn {
+  background:linear-gradient(to top right, #5cb1ff 0%, #0f63f6 100%);color: white;
+  color: white;
+  padding: 10px 5px;
+  margin: 8px 0;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+  opacity: 0.9;
+}
+
+.signupbtn:hover {
+  opacity:1;
+}
+
+/* Float cancel and signup buttons and add an equal width */
+.signupbtn {
+  float: left;
+  width: 40%;
+}
+
+/* Add padding to container elements */
+#form-container {
+  padding: 10px;
+}
+
+/* Clear floats */
+.clearfix::after {
+  content: "";
+  clear: both;
+  display: table;
+}
+
+form-text{
+    font-size: smaller;
+}
+
+/* Change styles for cancel button and signup button on extra small screens */
+@media screen and (max-width: 300px) {
+    .signupbtn {
+     width: 100%;
+  }
+}
+
+/*---------------------------------------*/
