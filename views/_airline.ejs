@@ -1,17 +1,19 @@
-<form action="" style="border:1px solid #ccc">
+<form action="/airlineUser" method="post" style="border:1px solid #ccc">
     <div id="form-container">
         
       <label for="user-name"><b>User Name</b></label>
-      <input type="text" placeholder="Enter User Name" name="user-name" required>
+      <input type="text" placeholder="Enter User Name" name="name" required>
   
       <label for="email"><b>Work Email</b></label>
       <input type="text" placeholder="Enter Email" name="email" required>
   
       <label for="psw"><b>Password</b></label>
-      <input type="password" placeholder="Enter Password" name="psw" required>
+      <input type="password" placeholder="Enter Password" name="password" required>
+
+      <p style="color:red"><%= errorMessage %></p>
   
       <div class="clearfix">
-        <button type="button" class="signupbtn">LOGIN</button>
+        <button type="submit" class="signupbtn">LOGIN</button>
       </div>
     </div>
   </form>

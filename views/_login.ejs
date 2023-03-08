@@ -1,18 +1,20 @@
-<form action="" style="border:1px solid #ccc">
+<form action="/loginUser" method="post" style="border:1px solid #ccc">
     <div id="form-container">
   
       <label for="email"><b>Email</b></label>
       <input type="text" placeholder="Enter Email" name="email" required>
   
       <label for="psw"><b>Password</b></label>
-      <input type="password" placeholder="Enter Password" name="psw" required>
+      <input type="password" placeholder="Enter Password" name="password" required>
 
       <label class="form-text">
         <input type="checkbox" checked="checked" name="remember" style="margin-bottom:5px"> Remember me
       </label>
+
+      <p style="color:red"><%= errorMessage %></p>
   
       <div class="clearfix">
-        <button type="button" class="signupbtn">LOGIN</button>
+        <button type="submit" class="signupbtn">LOGIN</button>
       </div>
     </div>
   </form>
