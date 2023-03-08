@@ -26,6 +26,28 @@ app.use('/css', express.static(__dirname + '/node_modules/bootstrap/dist/css'));
 //For accessing static files
 app.use(express.static('assets'));
 
+
+//For session-cookie
+const session = require('express-session');
+const passport = require('passport');
+const LocalStrategy = require('./config/passport-local-strategy');
+
+
+//Middleware to encrypt the session-cookie
+app.use(session({
+    name : 'mycookie1',//name of the cookie
+    //TODO : change the secret before lauch
+    secret : 'randomKey',//This is the key used for encrypting
+    saveUninitialized : false,
+    resave : false,
+    cookie : {
+        maxAge : (100*60*1000)//This is the age of the cookie i.e., how long it should exist. After that the cookie expires. In millisec.
+    }
+}));
+
+app.use(passport.initialize());
+app.use(passport.session());
+
 //Variables and arrays
 var count = 1;
 var errorMessage = "";
@@ -137,44 +159,19 @@ app.post('/registerUser', function(req, res){
 
 })
 
-app.post('/loginUser', function(req, res){
-    UserList.findOne({email : req.body.email, usertype : 'Passenger'})
-    .then((foundUser) => {
-        if(!foundUser){
-            errorMessage = "User not found";
-            return res.redirect('back');
-        }
-        else{
-            if(req.body.password === foundUser.password){
-                res.cookie('user_id', foundUser.id);
-                return res.redirect('/user/explore');
-            }
-            else{
-                errorMessage = 'Wrong password!';
-                return res.redirect('back');
-            }
-        }
-    })
+app.post('/loginUser', passport.authenticate(
+    'local',
+    {failureRedirect : '/login'}
+), function(req, res){
+    return res.redirect('/user/explore');
 })
 
-app.post('/airlineUser', function(req, res){
-    UserList.findOne({email : req.body.email, usertype : 'Airline'})
-    .then((foundUser) => {
-        if(!foundUser){
-            errorMessage = "User not found";
-            return res.redirect('back');
-        }
-        else{
-            if(req.body.password == foundUser.password){
-                res.cookie('user_id', foundUser.id);
-                return res.redirect('/airline/manage');
-            }
-            else{
-                errorMessage = 'Wrong password!';
-                return res.redirect('back');
-            }
-        }
-    })
+//Using passport.js
+app.post('/airlineUser', passport.authenticate(
+    'local',
+    {failureRedirect : '/airline'}
+), function(req, res){
+    return res.redirect('/airline/manage');
 })
 
 app.listen(port, function(err){
