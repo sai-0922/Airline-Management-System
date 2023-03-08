@@ -55,12 +55,44 @@ app.get('/airline', function(req, res){
     return res.redirect('back');
 });
 
-app.get('/explore', function(req, res){
-    return res.send('<h1>Welcome passenger</h1>');
+app.get('/user/explore', function(req, res){
+    if(req.cookies.user_id){
+        UserList.findById(req.cookies.user_id)
+        .then((user) => {
+            if(user){
+                return res.send('<h1>Welcome passenger</h1>');
+            }
+            else{
+                return res.redirect('/login');
+            }
+        })
+        .catch((error) => {
+            if(error){console.log('Error in finding cookie\'s user_id ', error)};
+        })
+    }
+    else{
+        return res.redirect('/login');
+    }
 })
 
-app.get('/manage', function(req, res){
-    return res.send('<h1>Manage airlines</h1>');
+app.get('/airline/manage', function(req, res){
+    if(req.cookies.user_id){
+        UserList.findById(req.cookies.user_id)
+        .then((user) => {
+            if(user){
+                return res.send('<h1>Manage airlines</h1>');
+            }
+            else{
+                return res.redirect('/airline');
+            }
+        })
+        .catch((error) => {
+            if(error){console.log('Error in finding cookie\'s user_id ', error)};
+        })
+    }
+    else{
+        return res.redirect('/airline');
+    }
 })
 
 //Post requests
@@ -114,7 +146,8 @@ app.post('/loginUser', function(req, res){
         }
         else{
             if(req.body.password === foundUser.password){
-                return res.redirect('/explore');
+                res.cookie('user_id', foundUser.id);
+                return res.redirect('/user/explore');
             }
             else{
                 errorMessage = 'Wrong password!';
@@ -133,7 +166,8 @@ app.post('/airlineUser', function(req, res){
         }
         else{
             if(req.body.password == foundUser.password){
-                return res.redirect('/manage');
+                res.cookie('user_id', foundUser.id);
+                return res.redirect('/airline/manage');
             }
             else{
                 errorMessage = 'Wrong password!';
