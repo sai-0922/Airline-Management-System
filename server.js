@@ -7,6 +7,7 @@ const app = express();
 //Setting up mongoose
 const db = require('./config/mongoose');
 const UserList = require('./models/user');
+const flightList = require('./models/flight')
 
 //Setting up cookie-parser
 const cookieParser = require('cookie-parser');
@@ -36,7 +37,7 @@ const LocalStrategy = require('./config/passport-local-strategy');
 //Middleware to encrypt the session-cookie
 app.use(session({
     name : 'mycookie1',//name of the cookie
-    //TODO : change the secret before lauch
+    //TODO : change the secret before launch
     secret : 'randomKey',//This is the key used for encrypting
     saveUninitialized : false,
     resave : false,
@@ -66,12 +67,23 @@ app.get('/register', function(req, res){
 });
 
 app.get('/login', function(req, res){
+
+    if(req.isAuthenticated()){
+        return res.redirect('/user/explore');
+    }
+
     console.log("Changed to login!")
     count = 2;
     return res.redirect('back');
 });
 
 app.get('/airline', function(req, res){
+
+    //If the user is already authenticated then the sign in page shouldn't be visible unless logged out.
+    if(req.isAuthenticated()){
+        return res.redirect('/airline/manage');
+    }
+
     console.log("Changed to airline!")
     count = 3;
     return res.redirect('back');
@@ -82,7 +94,13 @@ app.get('/user/explore', function(req, res){
         UserList.findById(req.cookies.user_id)
         .then((user) => {
             if(user){
-                return res.send('<h1>Welcome passenger</h1>');
+                //This if-else block prevents if a airlineUser tries to login as passenger.
+                if(user.usertype == 'Passenger'){
+                    return res.send('<h1>Welcome Passenger</h1>');
+                }
+                else{
+                    return res.redirect('/airline');
+                }
             }
             else{
                 return res.redirect('/login');
@@ -102,7 +120,13 @@ app.get('/airline/manage', function(req, res){
         UserList.findById(req.cookies.user_id)
         .then((user) => {
             if(user){
-                return res.send('<h1>Manage airlines</h1>');
+                //This if-else block prevents if a Passenger tries to login as AirlineUser.
+                if(user.usertype == 'Airline'){
+                    return res.render('manage_airline');
+                }
+                else{
+                    return res.redirect('/login');
+                }
             }
             else{
                 return res.redirect('/airline');
@@ -171,6 +195,8 @@ app.post('/airlineUser', passport.authenticate(
     'local',
     {failureRedirect : '/airline'}
 ), function(req, res){
+    //Once authenticated the user data is available in locals.
+    res.cookie('user_id', req.user.id);
     return res.redirect('/airline/manage');
 })
 
