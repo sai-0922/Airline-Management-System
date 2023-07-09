@@ -26,7 +26,7 @@ const flightSchema = new mongoose.Schema({
         required : true
     },
     Bclass : {
-        //We store the 1st index as seats available and 2nd index as the total seats.
+        //We store the 1st index as seats available and 2nd index as the total seats and 3rd is the price of ticket.
         type : Array,
         required : true
     },

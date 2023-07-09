@@ -16,6 +16,13 @@ const userSchema = new mongoose.Schema({
     usertype : {
         type : String,
         required : true
+    },
+    recentbooking : {
+        type : String
+    },
+    bookings : {
+        type : Number,
+        required : true
     }
 },  {
         timestamps : true
